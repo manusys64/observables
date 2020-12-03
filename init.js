@@ -16,7 +16,6 @@ const schedule = 1000 * 60 * 2  // poll binance every 2mins
 
 
 function callAndStore() {
-  const body = { a: 1 };
   let t = timer(startInSeconds, schedule)
       .pipe(
           switchMap(async() => {
