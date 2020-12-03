@@ -2,17 +2,13 @@ global.config = require('./config.json')
 const { timer } = require('rxjs');
 const { switchMap } = require('rxjs/operators');
 const fetch = require('node-fetch')
-const mysql = require('mysql');
-const { config } = require('process');
+const mysqlx = require('@mysql/xdevapi');
 const startInSeconds = 5000     // wait 5 seconds before starting
 const schedule = 1000 * 60 * 2  // poll binance every 2mins
 
-// var connection = mysql.createConnection(config);
+const client = mysqlx.getClient(config.connection);
 
-// connection.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Connected!");
-// });
+
 
 
 function callAndStore() {
@@ -28,8 +24,14 @@ function callAndStore() {
       )
 
   t.subscribe((response) => {
-          console.log(response)
-          // connection.query(`INSERT INTO data (value) VALUES(${response})`)
+          client.getSession()
+            .then(session => {
+              const table = session.getSchema(config.schema).getTable(config.table)
+              table.insert('bnb')
+                .values(response.price)
+                .execute()
+            });
+
       })
 }
 

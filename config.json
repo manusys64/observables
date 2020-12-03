@@ -1,6 +1,10 @@
 {
-    "host": "127.0.0.1",
-    "user": "spongebob",
-    "password": "squarepants",
-    "database": "API"
+    "connection": {
+        "password": "password",
+        "user": "user",
+        "host": "localhost",
+        "port": 33060,
+        "schema": "binance" 
+    },
+    "table": "price"
 }
