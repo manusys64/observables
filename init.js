@@ -4,8 +4,8 @@ const { switchMap } = require('rxjs/operators');
 const fetch = require('node-fetch')
 const mysql = require('mysql');
 const { config } = require('process');
-const startInSeconds = 1000
-const schedule = 1000 * 60 * .25
+const startInSeconds = 5000     // wait 5 seconds before starting
+const schedule = 1000 * 60 * 2  // poll binance every 2mins
 
 // var connection = mysql.createConnection(config);
 
@@ -20,9 +20,8 @@ function callAndStore() {
   let t = timer(startInSeconds, schedule)
       .pipe(
           switchMap(async() => {
-            return fetch('https://httpbin.org/post', {
-                        method: 'post',
-                        body:    JSON.stringify(body),
+            return fetch('https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT', {
+                        method: 'get',
                         headers: { 'Content-Type': 'application/json' },
                         })
                         .then(res => res.json())
