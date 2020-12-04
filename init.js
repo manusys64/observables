@@ -28,7 +28,7 @@ function callAndStore() {
             .then(session => {
               const table = session.getSchema(config.schema).getTable(config.table)
               table.insert('bnb')
-                .values(response.price)
+                .values(parseFloat(response.price))
                 .execute()
             });
 
