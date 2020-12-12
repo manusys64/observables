@@ -1,4 +1,4 @@
-### example calling external api with fetch and storing in mysql *
+### example calling external api with fetch and storing in mysql 8
 1. run module
 ```
 node init.js
